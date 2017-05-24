@@ -1,5 +1,13 @@
 <?php
 
+namespace GenTux\CyberSourceSDK;
+
+use SoapVar;
+use stdClass;
+use Exception;
+use SoapClient;
+use SoapHeader;
+
 set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/conf');
 
 /**
@@ -20,7 +28,7 @@ class CybsClient extends SoapClient
         $required = array('merchant_id', 'transaction_key');
 
         if (!$properties) {
-            throw new Exception('Unable to read cybs.ini.');
+            throw new Exception('Unable to set properties or read cybs.ini.');
         }
 
         if ($nvp === true) {
@@ -63,7 +71,7 @@ class CybsClient extends SoapClient
 
         $auth = new stdClass();
         $auth->Username = $soapUsername;
-        $auth->Password = $soapPassword; 
+        $auth->Password = $soapPassword;
 
         $soapAuth = new SoapVar(
             $auth,
@@ -71,10 +79,10 @@ class CybsClient extends SoapClient
             NULL, $nameSpace,
             'UsernameToken',
             $nameSpace
-        ); 
+        );
 
         $token = new stdClass();
-        $token->UsernameToken = $soapAuth; 
+        $token->UsernameToken = $soapAuth;
 
         $soapToken = new SoapVar(
             $token,
@@ -94,8 +102,8 @@ class CybsClient extends SoapClient
             $nameSpace
         );
 
-        $header = new SoapHeader($nameSpace, 'Security', $security, true); 
-        $this->__setSoapHeaders(array($header)); 
+        $header = new SoapHeader($nameSpace, 'Security', $security, true);
+        $this->__setSoapHeaders(array($header));
     }
 
     /**

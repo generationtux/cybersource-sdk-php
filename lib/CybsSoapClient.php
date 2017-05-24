@@ -1,6 +1,6 @@
 <?php
 
-include 'CybsClient.php';
+namespace GenTux\CyberSourceSDK;
 
 /**
  * CybsSoapClient
@@ -10,14 +10,16 @@ include 'CybsClient.php';
 class CybsSoapClient extends CybsClient
 {
 
-    function __construct($options=array())
+    public function __construct($options=array(), $properties=array())
     {
-        $properties = parse_ini_file('cybs.ini');
+        if (empty($properties)) {
+            $properties = parse_ini_file('cybs.ini');
+        }
         parent::__construct($options, $properties);
     }
 
     /**
-     * Returns a properly formatted request object from a SimpleXMLElement. 
+     * Returns a properly formatted request object from a SimpleXMLElement.
      *
      * @param SimpleXMLElement $simpleXml Representation of an XML structure
      * @return stdClass A request with the data from the SimpleXMLElement.
@@ -47,7 +49,7 @@ class CybsSoapClient extends CybsClient
                     foreach($array as $k => $value) {
                         $newArray[$k] = $this->simpleXmlToCybsRequest($value);
                     }
-                    $request->$key = $newArray; 
+                    $request->$key = $newArray;
                 }
             } else if ($element instanceof SimpleXMLElement) {
                 $request->$key = $this->simpleXmlToCybsRequest($element);
@@ -78,7 +80,7 @@ class CybsSoapClient extends CybsClient
      *
      * @param string $filePath The path to the XML file
      * @param string $merchantReferenceCode Desired reference code for the request
-     * @return stdClass An object representation of the transaction response.     
+     * @return stdClass An object representation of the transaction response.
      */
     public function runTransactionFromXml($xml, $merchantReferenceCode)
     {
@@ -94,7 +96,7 @@ class CybsSoapClient extends CybsClient
      *
      * @param string $filePath The path to the XML file
      * @param string $merchantReferenceCode Desired reference code for the request
-     * @return stdClass An object representation of the transaction response.     
+     * @return stdClass An object representation of the transaction response.
      */
     public function runTransactionFromFile($filePath, $merchantReferenceCode)
     {

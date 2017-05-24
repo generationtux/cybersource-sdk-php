@@ -1,5 +1,5 @@
 {
-  "name": "cybersource/sdk-php",
+  "name": "generationtux/cybersource-sdk-php",
   "description": "CyberSource PHP SOAP client",
   "keywords": [
     "cybersource",
@@ -12,6 +12,9 @@
     {
       "name": "CyberSource",
       "homepage": "https://github.com/CyberSource"
+    },
+    {
+      "name": "Generation Tux"
     }
   ],
   "require": {
@@ -24,7 +27,9 @@
       "phpunit/phpunit": "3.7.*"
   },
   "autoload": {
-    "classmap": ["lib/"]
+      "psr-4": {
+          "GenTux\\CyberSourceSDK\\": "lib/"
+      }
   },
   "include-path": ["lib/conf/"]
 }
